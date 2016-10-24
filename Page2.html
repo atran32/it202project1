@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Midterm Project</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+    body {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <!-- jQuery Version 1.11.1 -->
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Arrested vs No Arrest</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="Page2.html">Crime Breakdown</a>
+                    </li>
+                    <li>
+                        <a href="Page3.html">Crime Map</a>
+                    </li>
+                    <li>
+                        <a href="Page4.html">About</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1>Crime Breakdown</h1>
+                <p class="lead">Scroll over a bar for more information.</p>
+            </div>
+        </div>
+                        
+        <script>
+    
+            var crimeTypes = [];
+            var stringArr = ["Crime", "Times Committed"]
+            crimeTypes.push(stringArr);
+        
+            
+            console.log(crimeTypes);
+            //console.log(crimeCount);
+            
+            $.getJSON('https://data.cityofchicago.org/resource/x2n5-8w5q.json?arrest=%27Y%27&ward=25')
+            .done( function(result) {
+                console.log(result);
+                
+                 $.each(result, function(i,v) {
+
+                    //var crimeName = {crimeDesc: (v._primary_decsription), timesDone: "1"};
+                    var crimeName = [v._primary_decsription, 1];
+                    var found = false;
+                    if(crimeTypes.length == 1)
+                    {
+
+                        //crimeTypes.push({crimeDesc: v._primary_decsription, timesDone: 1});
+                         crimeTypes.push(crimeName);
+                        //console.log(crimeTypes);
+                       // console.log("ioshjdaiosjdioasjdioas");
+                        //crimeTypes.push({crimeDesc: v._primary_description, count: 1});
+                    }
+                    for(var x = 0; x < crimeTypes.length; x++)
+                    {
+                        //console.log(crimeTypes[x].crimeDesc);
+                        //console.log("This is right after the log" + crimeTypes.length);
+                        if(crimeTypes[x][0] == v._primary_decsription)
+                        {
+                            found = true;
+                            crimeTypes[x][1]++;
+                            break;
+                        }
+                    }
+                    if(found == false)
+                    {
+                        //crimeTypes.push({descript: v._primary_description, count: 1});
+                        crimeTypes.push(crimeName);
+                        //console.log(crimeTypes);
+                    }
+                    
+                 });
+                 console.log(crimeTypes);
+                 
+             });
+            
+        </script>
+        
+        <script>
+    
+            var nonCrimeTypes = [];
+            var stringArrr = ["Crime", "Times Committed"]
+            nonCrimeTypes.push(stringArrr);
+        
+            
+            //console.log(crimeTypes);
+            //console.log(crimeCount);
+            
+            $.getJSON('https://data.cityofchicago.org/resource/x2n5-8w5q.json?arrest=%27N%27&ward=25')
+            .done( function(result) {
+                console.log(result);
+                
+                 $.each(result, function(i,v) {
+
+                    var nonCrimeName = [v._primary_decsription, 1];
+                    var nfound = false;
+                    if(nonCrimeTypes.length == 1)
+                    {
+                         nonCrimeTypes.push(nonCrimeName);
+                    }
+                    for(var x = 0; x < nonCrimeTypes.length; x++)
+                    {
+                        if(nonCrimeTypes[x][0] == v._primary_decsription)
+                        {
+                            nfound = true;
+                            nonCrimeTypes[x][1]++;
+                            break;
+                        }
+                    }
+                    if(nfound == false)
+                    {
+                        //crimeTypes.push({descript: v._primary_description, count: 1});
+                        nonCrimeTypes.push(nonCrimeName);
+                        //console.log(crimeTypes);
+                    }
+                    
+                 });
+                 console.log(nonCrimeTypes);
+                 
+             });
+            
+        </script>
+        <!-- /.row -->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawArrests);
+          google.charts.setOnLoadCallback(drawNonArrests);
+
+            function drawArrests() {
+            
+           
+                    console.log("saiodjasiodjaiosj");
+                    console.log(crimeTypes);
+                  
+                  dataTable = new google.visualization.DataTable();
+                  
+                  var numRows = crimeTypes.length;
+                  
+                  dataTable.addColumn('string', crimeTypes[0][0]);
+                  dataTable.addColumn('number', crimeTypes[0][1]);
+                         
+          
+                  for (var i = 1; i < numRows; i++)
+                    dataTable.addRow(crimeTypes[i]); 
+                  
+                  
+            
+                  var options = {
+                    title: 'Crimes commited near UIC',
+                    chartArea: {width: '100%'},
+                    hAxis: {
+                      title: 'Crimes People Have Been Arrested For',
+                      minValue: 0
+                    },
+                    vAxis: {
+                      title: 'Crimes'
+                    }
+                  };
+            
+                  var chart = new google.visualization.BarChart(document.getElementById('arrestedChart'));
+                  
+                  console.log(dataTable);
+            
+                  chart.draw(dataTable, options);
+                }
+                
+                function drawNonArrests() {
+            
+           
+                    console.log("saiodjasiodjaiosj");
+                    console.log(nonCrimeTypes);
+                  
+                  dataTable = new google.visualization.DataTable();
+                  
+                  var numRows = nonCrimeTypes.length;
+                  
+                  dataTable.addColumn('string', nonCrimeTypes[0][0]);
+                  dataTable.addColumn('number', nonCrimeTypes[0][1]);
+                         
+          
+                  for (var i = 1; i < numRows; i++)
+                    dataTable.addRow(nonCrimeTypes[i]); 
+                  
+                  
+            
+                  var options = {
+                    title: 'Crimes commited near UIC',
+                    chartArea: {width: '100%'},
+                    colors: ['#b0120a'],
+                    hAxis: {
+                      title: 'Crimes People Have Not Been Arrested For',
+                      minValue: 0
+                    },
+                    vAxis: {
+                      title: 'Crimes'
+                    }
+                  };
+            
+                  var chart = new google.visualization.BarChart(document.getElementById('noArrestChart'));
+                  
+                  console.log(dataTable);
+            
+                  chart.draw(dataTable, options);
+                }
+                
+                
+                
+        </script>
+        
+  <body>
+    <div id="arrestedChart"></div>
+    <br><br><br><br>
+    <div id="noArrestChart"></div>
+    <p class="lead">No Arrest Crimes are skewed because json returns the first 1k results, Couldn't figure out pagination.</p>
+  </body>
+
+            </div>
+    <!-- /.container -->
+
+    <!-- jQuery Version 1.11.1 -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
